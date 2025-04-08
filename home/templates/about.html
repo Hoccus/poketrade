@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>About page</title>
-</head>
-<body>
-  <h1>Welcome to the About Page</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class="p-3">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-6 mx-auto mb-3">
+                <h2>What is PokéTrade?</h2>
+                <hr />
+                <p>PokéTrade is a premier Pokémon Trading Card Game
+                    that has an emphasis on trading to grow your collection.
+                    PokéTrade features a live player-ran marketplace where players can trade and
+                    barter to exchange their cards.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
