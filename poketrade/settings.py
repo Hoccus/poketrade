@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'trade',
     'cart',
     'pokemonCard',
+    'collection',
 ]
 
 MIDDLEWARE = [
