@@ -1,5 +1,5 @@
 from django.urls import path
 from . import views
 urlpatterns = [
-    path('', views.index, name='collection.index'),
+    path('', views.get_cards, name='collection.get_cards'),
 ]
