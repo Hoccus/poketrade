@@ -1,3 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from pokemonCard.models import PokemonCard
+import request
 
-# Create your views here.
+def get_card_image(request) :
