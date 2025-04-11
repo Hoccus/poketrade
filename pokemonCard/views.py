@@ -3,8 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 import requests
 from .models import PokemonCard
-def fetch_and_store_pokemon(limit):
-    base_url = "https://pokeapi.co/api/v2/pokemon?limit=" + str(limit)
+def fetch_and_store_pokemon():
+    base_url = "https://pokeapi.co/api/v2/pokemon?limit=1000"
     response = requests.get(base_url)
 
     if response.status_code == 200:
@@ -23,6 +23,6 @@ def fetch_and_store_pokemon(limit):
                         'image_url': sprite,
                         'hp': hp,
                         'attack': attack,
-                        'description': ''
+                        'description': 'no description',
                     }
                 )
