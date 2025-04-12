@@ -7,6 +7,6 @@ class PokemonCard(models.Model):
     hp = models.IntegerField()
     attack = models.IntegerField()
     description = models.TextField()
-    image = models.ImageField(upload_to='pokemonCard_images/')
+    image_url = models.URLField(default="https://via.placeholder.com/120")
     def __str__(self):
         return str(self.id) + ' - ' + self.name
