@@ -16,8 +16,29 @@
             <img src="{% static 'img/about.jpg' %}"
             class="card-img-top rounded">
                 <div class="card-body text-center">
+                    <a href="{% url 'marketListings.show' id=listing.id %}"
+                    class="btn bg-dark text-white">
                 {{ listing.item.pokemon.name }}
+                    </a>
                 </div>
+                {{listing.price}}
+                <p class="card-text">
+ <form method="post" action="{% url 'cart.add' id=listing.id %}">
+<div class="row">
+{% csrf_token %}
+<div class="col-auto">
+<div class="input-group col-auto">
+
+</div>
+</div>
+<div class="col-auto">
+<button class="btn bg-dark text-white"
+type="submit">Add to cart</button>
+</div>
+</div>
+</form>
+</p>
+
                 </div>
             </div>
             {% endfor %}
