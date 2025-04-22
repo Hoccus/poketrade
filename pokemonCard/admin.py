@@ -1,5 +1,7 @@
 from django.contrib import admin
 from .models import PokemonCard
-admin.site.register(PokemonCard)
 
-# Register your models here.
+@admin.register(PokemonCard)
+class PokemonCardAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'type', 'hp', 'attack', 'defense')
+    search_fields = ('name',)

@@ -1,8 +1,11 @@
-import requests
-from django.shortcuts import render, get_object_or_404
-
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from collection.models import CollectionItem
 from pokemonCard.models import PokemonCard
 
-def get_cards(request):
-    pokemon_list = PokemonCard.objects.all()
-    return render(request, 'collection/index.html', {'pokemon_list': pokemon_list})
+@login_required
+def user_collection(request):
+    cards = CollectionItem.objects.filter(user=request.user, status='collection').select_related('pokemon')
+    return render(request, 'collection/index.html', {
+        'user_pokemon_list': cards
+    })
