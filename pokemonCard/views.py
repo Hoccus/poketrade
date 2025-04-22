@@ -13,16 +13,20 @@ def fetch_and_store_pokemon():
             if detail.status_code == 200:
                 data = detail.json()
                 name = data['name'].capitalize()
+                type = [t['type']['name'] for t in data['types']]
                 sprite = data['sprites']['front_default']
                 hp = next((stat['base_stat'] for stat in data['stats'] if stat['stat']['name'] == 'hp'), None)
                 attack = next((stat['base_stat'] for stat in data['stats'] if stat['stat']['name'] == 'attack'), None)
+                defense = next((stat['base_stat'] for stat in data['stats'] if stat['stat']['name'] == 'defense'), None)
 
                 PokemonCard.objects.get_or_create(
                     name=name,
                     defaults={
                         'image_url': sprite,
+                        'type': type,
                         'hp': hp,
                         'attack': attack,
+                        'defense': defense,
                         'description': 'no description',
                     }
                 )
