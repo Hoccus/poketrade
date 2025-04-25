@@ -22,6 +22,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
+    path('collection/', include('collection.urls')),
+    path('accounts/', include('accounts.urls')),
     path('accounts/', include('accounts.urls')),
     path('marketplace/', include('marketplace.urls')),
     path('cart/', include('cart.urls')),

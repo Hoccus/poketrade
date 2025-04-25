@@ -4,6 +4,7 @@ from django.contrib.auth import login as auth_login, authenticate, logout as aut
 from .forms import CustomUserCreationForm, CustomErrorList
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from collection.utils import give_random_pokemons_to_user
 from django.contrib.auth.models import User
 @login_required
 def logout(request):
@@ -35,11 +36,13 @@ def signup(request):
     elif request.method == 'POST':
         form = CustomUserCreationForm(request.POST, error_class=CustomErrorList)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            give_random_pokemons_to_user(user)
             return redirect('accounts.login')
         else:
             template_data['form'] = form
             return render(request, 'accounts/signup.html', {'template_data': template_data})
+
 @login_required
 def orders(request):
     template_data = {}
