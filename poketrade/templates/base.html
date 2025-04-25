@@ -13,12 +13,23 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <meta name="viewport" content="width=device-width,
-initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
     <!-- Header -->
-    <header class="header" style="opacity: 1; visibility: inherit;">
+{#    <header class="header" style="opacity: 1; visibility: inherit;">#}
+{#        <div class="container">#}
+{#            <div class="header-left">#}
+{#                <nav class="nav">#}
+{#                    <div class="navbar-nav ms-auto navbar-ml">#}
+{#                        <a class="nav-link" href="{%  url 'home.about' %}">About</a>#}
+{#                    </div>#}
+{#                </nav>#}
+{#            </div>#}
+{#        </div>#}
+{#    </header>#}
+    <!-- Header -->
+    <nav class="p-3 navbar navbar-dark bg-dark navbar-expand-lg">
         <div class="container">
             <div class="header-left">
                 <nav class="nav">
@@ -31,13 +42,29 @@ initial-scale=1" />
                 </nav>
             </div>
         </div>
-    </header>
+    </nav>
     <!-- Header -->
     <div>
         {% block content %}
         {% endblock content %}
     </div>
     <!-- Footer -->
+    <div class="footer">
+        <footer>
+            <div class="footer-nav">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <a href="#">Help Center</a>
+            </div>
+
+            <div class="copyright">
+                &copy; 2025 Group 2. All Rights Reserved.
+            </div>
+        </footer>
+    </div>
     <!-- Footer -->
 </body>
 </html>
+
