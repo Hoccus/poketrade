@@ -24,8 +24,10 @@ initial-scale=1" />
                 <nav class="nav">
                     <div class="navbar-nav ms-auto navbar-ml">
                         <a class="nav-link" href="{%  url 'home.about' %}">About</a>
+                        <a class="nav-link" href="{% url 'marketplace.index' %}">Marketplace</a>
+                        <a class="nav-link" href="{% url 'cart.index' %}">Cart</a>
+                        <a class="nav-link" href="{% url 'accounts.orders' %}">Orders</a>
                     </div>
-                    <a class="nav-link" href="{%  url 'collection.get_cards' %}" style="color: black; text-decoration: none;">My Collection</a>
                 </nav>
             </div>
         </div>
