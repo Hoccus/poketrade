@@ -8,7 +8,6 @@ class MarketListing(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
     item = models.ForeignKey(CollectionItem, on_delete=models.CASCADE)
     price = models.FloatField()
-    inCart = models.BooleanField(default=False)
     def __str__(self):
         return str(self.id) + ' - ' + self.seller.username
 
