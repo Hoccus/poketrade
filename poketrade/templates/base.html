@@ -31,15 +31,15 @@
     <!-- Header -->
     <nav class="p-3 navbar navbar-dark bg-dark navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="% url 'home.index' %}"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                    araia-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collpase navbar-collapsse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ms-auto navbar-ml">
-                    <a class="nav-link" href="{%  url 'home.about' %}">About</a>
-                </div>
+            <div class="header-left">
+                <nav class="nav">
+                    <div class="navbar-nav ms-auto navbar-ml">
+                        <a class="nav-link" href="{%  url 'home.about' %}">About</a>
+                        <a class="nav-link" href="{% url 'marketplace.index' %}">Marketplace</a>
+                        <a class="nav-link" href="{% url 'cart.index' %}">Cart</a>
+                        <a class="nav-link" href="{% url 'accounts.orders' %}">Orders</a>
+                    </div>
+                </nav>
             </div>
         </div>
     </nav>
@@ -67,3 +67,4 @@
     <!-- Footer -->
 </body>
 </html>
+
