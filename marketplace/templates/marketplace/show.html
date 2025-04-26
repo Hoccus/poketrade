@@ -19,7 +19,15 @@
         <hr />
 
         <p><b>Type:</b> {{ template_data.listing.item.pokemon.type }}</p>
-        <p><b>HP:</b> {{ template_data.listing.item.pokemon.hp }}</p>
+        <p><b>HP:</b> {{ template_data.listing.item.pokemon.hp }}
+          {% if template_data.hp_percent <= 33 %}
+            <span style="color: #dc3545;">(LOW)</span>
+          {% elif template_data.hp_percent <= 66 %}
+            <span style="color: #ffc107;">(MEDIUM)</span>
+          {% else %}
+            <span style="color: #28a745;">(HIGH)</span>
+          {% endif %}
+        </p>
 
             <div style="background-color: #ddd; height: 10px; width: 100%; border-radius: 5px; margin-bottom: 20px;">
               {% if template_data.hp_percent <= 33 %}
@@ -31,7 +39,15 @@
               {% endif %}
             </div>
 
-        <p><b>Attack:</b> {{ template_data.listing.item.pokemon.attack }}</p>
+        <p><b>Attack:</b> {{ template_data.listing.item.pokemon.attack }}
+          {% if template_data.attack_percent <= 33 %}
+            <span style="color: #dc3545;">(LOW)</span>
+          {% elif template_data.attack_percent <= 66 %}
+            <span style="color: #ffc107;">(MEDIUM)</span>
+          {% else %}
+            <span style="color: #28a745;">(HIGH)</span>
+          {% endif %}
+        </p>
             <div style="background-color: #ddd; height: 10px; width: 100%; border-radius: 5px; margin-bottom: 20px;">
               {% if template_data.attack_percent <= 33 %}
                 <div style="background-color: #dc3545; height: 10px; width: {{ template_data.attack_percent }}%; border-radius: 5px;"></div>
@@ -42,7 +58,15 @@
               {% endif %}
             </div>
 
-        <p><b>Defense:</b> {{ template_data.listing.item.pokemon.defense }}</p>
+        <p><b>Defense:</b> {{ template_data.listing.item.pokemon.defense }}
+          {% if template_data.defense_percent <= 33 %}
+            <span style="color: #dc3545;">(LOW)</span>
+          {% elif template_data.defense_percent <= 66 %}
+            <span style="color: #ffc107;">(MEDIUM)</span>
+          {% else %}
+            <span style="color: #28a745;">(HIGH)</span>
+          {% endif %}
+        </p>
           <div style="background-color: #ddd; height: 10px; width: 100%; border-radius: 5px; margin-bottom: 20px;">
               {% if template_data.defense_percent <= 33 %}
                 <div style="background-color: #dc3545; height: 10px; width: {{ template_data.defense_percent }}%; border-radius: 5px;"></div>

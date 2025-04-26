@@ -37,7 +37,7 @@ def signup(request):
         form = CustomUserCreationForm(request.POST, error_class=CustomErrorList)
         if form.is_valid():
             user = form.save()
-            # give_random_pokemons_to_user(user)
+            give_random_pokemons_to_user(user)
             return redirect('accounts.login')
         else:
             template_data['form'] = form
