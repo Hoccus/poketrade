@@ -1,9 +1,14 @@
 from django.shortcuts import render
 from .models import MarketListing
 def index(request):
+    search_term = request.GET.get('search')
+    if search_term:
+        wow = MarketListing.objects.filter(item__pokemon__name__icontains=search_term, inCart=False)
+    else:
+        wow = MarketListing.objects.filter(inCart=False)
     template_data = {}
     template_data['title'] = 'Listings'
-    template_data['listings'] = MarketListing.objects.filter(inCart=False)
+    template_data['listings'] = wow
     return render(request, 'marketplace/index.html',
     {'template_data': template_data})
 def show(request, id):
