@@ -29,7 +29,12 @@ def delete_listing(request, id, listing_id):
     return redirect('collection.detail', id=id)
 @login_required
 def user_collection(request):
-    cards = CollectionItem.objects.filter(user=request.user).select_related('pokemon')
+
+    search_term = request.GET.get('search')
+    if search_term:
+        cards = CollectionItem.objects.filter(pokemon__name__icontains=search_term, user=request.user)
+    else:
+        cards = CollectionItem.objects.filter(user=request.user).select_related('pokemon')
     return render(request, 'collection/index.html', {
         'user_pokemon_list': cards
     })
