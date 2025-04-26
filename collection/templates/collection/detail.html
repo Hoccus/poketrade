@@ -1,11 +1,115 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<div class="container text-center mt-5">
-    <h1>{{ pokemon.name }}</h1>
-    <img src="{{ pokemon.image_url }}" alt="{{ pokemon.name }}">
-    <p><strong>HP:</strong> {{ pokemon.hp }}</p>
-    <p><strong>Attack:</strong> {{ pokemon.attack }}</p>
-    <p>{{ pokemon.description }}</p>
-    <a href="{% url 'collection.get_cards' %}" class="btn btn-secondary">← Back to Collection</a>
+
+<div class="p-4">
+  <div class="container position-relative">
+    <div class="row mt-4">
+
+      <!-- Favorite Button (Top Left) -->
+      <div class="position-absolute" style="top: 10px; left: 10px;">
+        <form method="post" action="{% url 'collection.toggle_favorite' id=item.id %}">
+          {% csrf_token %}
+          <button type="submit" style="background: none; border: none; font-size: 24px;">
+            {% if item.status == "pending" %}
+              <span style="color: #ffc107;">&#9733;</span>  {# solid star #}
+            {% else %}
+              <span style="color: #ffc107;">&#9734;</span>  {# hollow star #}
+            {% endif %}
+          </button>
+        </form>
+      </div>
+
+      <!-- Left Side: Pokémon Image -->
+      <div class="col-md-6 mb-4 text-center">
+        <div style="background-color: #f0f0f0; padding: 10px; display: inline-block; border-radius: 8px;">
+          <img src="{{ item.pokemon.image_url }}"
+               style="width: 120px; height: auto; display: block; margin: auto;"
+               alt="{{ item.pokemon.name }}"
+               onmouseover="this.style.filter='brightness(85%)'; this.style.cursor='pointer';"
+               onmouseout="this.style.filter='brightness(100%)';">
+        </div>
+      </div>
+
+      <!-- Right Side: Pokémon Info -->
+      <div class="col-md-6 mb-4">
+        <h2>{{ item.pokemon.name }}</h2>
+        <hr />
+
+        <!-- Pokémon Type -->
+        <p><b>Type:</b> {{ item.pokemon.type }}</p>
+
+        <!-- HP Section -->
+        <p><b>HP:</b> {{ item.pokemon.hp }}
+          {% if item.hp_percent <= 33 %}
+            <span style="color: #dc3545;">(LOW)</span>
+          {% elif item.hp_percent <= 66 %}
+            <span style="color: #ffc107;">(MEDIUM)</span>
+          {% else %}
+            <span style="color: #28a745;">(HIGH)</span>
+          {% endif %}
+        </p>
+        <div style="background-color: #ddd; height: 10px; width: 100%; border-radius: 5px; margin-bottom: 20px;">
+          {% if item.hp_percent <= 33 %}
+            <div style="background-color: #dc3545; height: 10px; width: {{ item.hp_percent }}%; border-radius: 5px;"></div>
+          {% elif item.hp_percent <= 66 %}
+            <div style="background-color: #ffc107; height: 10px; width: {{ item.hp_percent }}%; border-radius: 5px;"></div>
+          {% else %}
+            <div style="background-color: #28a745; height: 10px; width: {{ item.hp_percent }}%; border-radius: 5px;"></div>
+          {% endif %}
+        </div>
+
+        <!-- Attack Section -->
+        <p><b>Attack:</b> {{ item.pokemon.attack }}
+          {% if item.attack_percent <= 33 %}
+            <span style="color: #dc3545;">(LOW)</span>
+          {% elif item.attack_percent <= 66 %}
+            <span style="color: #ffc107;">(MEDIUM)</span>
+          {% else %}
+            <span style="color: #28a745;">(HIGH)</span>
+          {% endif %}
+        </p>
+        <div style="background-color: #ddd; height: 10px; width: 100%; border-radius: 5px; margin-bottom: 20px;">
+          {% if item.attack_percent <= 33 %}
+            <div style="background-color: #dc3545; height: 10px; width: {{ item.attack_percent }}%; border-radius: 5px;"></div>
+          {% elif item.attack_percent <= 66 %}
+            <div style="background-color: #ffc107; height: 10px; width: {{ item.attack_percent }}%; border-radius: 5px;"></div>
+          {% else %}
+            <div style="background-color: #28a745; height: 10px; width: {{ item.attack_percent }}%; border-radius: 5px;"></div>
+          {% endif %}
+        </div>
+
+        <!-- Defense Section -->
+        <p><b>Defense:</b> {{ item.pokemon.defense }}
+          {% if item.defense_percent <= 33 %}
+            <span style="color: #dc3545;">(LOW)</span>
+          {% elif item.defense_percent <= 66 %}
+            <span style="color: #ffc107;">(MEDIUM)</span>
+          {% else %}
+            <span style="color: #28a745;">(HIGH)</span>
+          {% endif %}
+        </p>
+        <div style="background-color: #ddd; height: 10px; width: 100%; border-radius: 5px; margin-bottom: 20px;">
+          {% if item.defense_percent <= 33 %}
+            <div style="background-color: #dc3545; height: 10px; width: {{ item.defense_percent }}%; border-radius: 5px;"></div>
+          {% elif item.defense_percent <= 66 %}
+            <div style="background-color: #ffc107; height: 10px; width: {{ item.defense_percent }}%; border-radius: 5px;"></div>
+          {% else %}
+            <div style="background-color: #28a745; height: 10px; width: {{ item.defense_percent }}%; border-radius: 5px;"></div>
+          {% endif %}
+        </div>
+
+        <!-- Description -->
+        <hr />
+        <p><b>Description:</b> {{ item.pokemon.description }}</p>
+
+        <!-- Date Acquired -->
+        <p><b>Date Acquired:</b> {{ item.date }}</p>
+
+      </div>
+
+    </div>
+  </div>
 </div>
-{% endblock %}
+
+{% endblock content %}

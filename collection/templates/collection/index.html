@@ -10,16 +10,20 @@
             </div>
         </div>
         <div class="row">
-            {% for item in user_pokemon_list %}
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-                    <div class="card text-center p-2">
-                        <img src="{{ item.pokemon.image_url }}" class="card-img-top" style="width: 120px; margin: auto;" alt="{{ item.pokemon.name }}">
-                        <div class="card-body p-1">
-                            <h5>{{ item.pokemon.name }}</h5>
-                        </div>
-                    </div>
-            </div>
-            {% endfor %}
+          {% for item in user_pokemon_list %}
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+
+            <a href="{% url 'collection.detail' id=item.id %}" style="text-decoration: none; color: inherit;">
+              <div class="card text-center p-2">
+                <img src="{{ item.pokemon.image_url }}" class="card-img-top" style="width: 80px; margin: auto;" alt="{{ item.pokemon.name }}">
+                <div class="card-body p-1">
+                  <h5>{{ item.pokemon.name }}</h5>
+                </div>
+              </div>
+            </a>
+
+          </div>
+          {% endfor %}
         </div>
     </div>
 </div>
