@@ -7,6 +7,7 @@
     <div class="row mt-4">
 
       <!-- Favorite Button (Top Left) -->
+      {% if item.status != 'listed' %}
       <div class="position-absolute" style="top: 10px; left: 10px;">
         <form method="post" action="{% url 'collection.toggle_favorite' id=item.id %}">
           {% csrf_token %}
@@ -19,6 +20,7 @@
           </button>
         </form>
       </div>
+      {% endif %}
 
       <!-- Left Side: Pokémon Image -->
       <div class="col-md-6 mb-4 text-center">
@@ -124,7 +126,6 @@
               </div>
             </form>
           {% endif %}
-          {% elif item.status == 'pending' %}
 
           {% else %}
           <form method="POST" action="{% url 'collection.create_listing' id=item.id %}">
