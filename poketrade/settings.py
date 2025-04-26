@@ -131,6 +131,13 @@ STATICFILES_DIRS = [BASE_DIR / 'poketrade/static/',]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+#CSRF
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+]
+
 #SMTP CONFIGURATION
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
