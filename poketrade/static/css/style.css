@@ -1,0 +1,38 @@
+.bg-index{
+    background: url("/static/img/background.jpg") no-repeat fixed;
+    background-size: 100% auto;
+}
+
+.custom-nav a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1px;
+}
+
+footer {
+    background-color: #000;
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 2px solid #222;
+}
+
+.footer-nav {
+    margin-bottom: 20px;
+}
+
+.footer-nav a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 14px;
+}
+
+.footer-nav a:hover {
+    color: #fff;
+}
+.copyright {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #555;
+}
