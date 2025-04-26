@@ -10,6 +10,9 @@
             <div class="col mx-auto mb-3">
                 <h2>Shopping Cart</h2>
                 <hr />
+                <h5>Your PokeCoins: {{ request.user.userprofile.pokeCoins }}
+                    <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20">
+                </h5>
             </div>
         </div>
 
@@ -28,7 +31,7 @@
                     <tr>
                         <td>{{ listing.id }}</td>
                         <td>{{ listing.item.pokemon.name }}</td>
-                        <td>{{ listing.price }} PokeCoins</td>
+                        <td>{{ listing.price }} <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20"></td>
                         <td>{{ listing.quantity }}</td>
                     </tr>
                     {% endfor %}
@@ -38,7 +41,7 @@
 
         <div class="row">
             <div class="text-end">
-                <a class="btn btn-outline-secondary mb-2"><b>Total to pay:</b> {{ template_data.cart_total }} PokeCoins</a>
+                <a class="btn btn-outline-secondary mb-2"><b>Total to pay:</b> {{ template_data.cart_total }} <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20"></a>
 
                 {% if template_data.listings_in_cart|length > 0 %}
                     <a href="{% url 'cart.purchase' %}" class="btn bg-dark text-white mb-2">Purchase</a>

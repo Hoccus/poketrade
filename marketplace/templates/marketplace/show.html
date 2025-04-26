@@ -81,7 +81,7 @@
         <hr />
         <p><b>Posted By:</b> {{ template_data.listing.seller.username }}</p>
         <p><b>Date Posted:</b> {{ template_data.listing.date }}</p>
-        <p><b>Price:</b> ${{ template_data.listing.price }}</p>
+        <p><b>Price:</b> {{ template_data.listing.price }} <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20"></p>
 
         <form method="post" action="{% url 'cart.add' id=template_data.listing.id %}" class="mt-3">
           {% csrf_token %}

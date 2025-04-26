@@ -31,7 +31,7 @@
                         <h5 class="mb-2">{{ listing.item.pokemon.name }}</h5>
 
                         <!-- Price -->
-                        <p class="mb-1">{{ listing.price }}</p>
+                        <p class="mb-1">{{ listing.price }} <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20"></p>
 
                         <!-- Add to Cart button -->
                         <form method="post" action="{% url 'cart.add' id=listing.id %}" class="mt-2">
