@@ -24,7 +24,7 @@
             {% for listing in template_data.listings %}
             <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
 
-                <div class="card text-center p-2 h-100">
+                <div class="card text-center p-2 h-100 {% if listing.seller == request.user %}border-danger{% endif %}">
 
                     <a href="{% url 'marketListings.show' id=listing.id %}">
                         <div style="background-color: #f0f0f0; padding: 10px; display: inline-block; border-radius: 8px;">
@@ -43,12 +43,18 @@
                         <p class="mb-1">{{ listing.price }} <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20"></p>
 
                         <!-- Add to Cart button -->
-                        <form method="post" action="{% url 'cart.add' id=listing.id %}" class="mt-2">
-                            {% csrf_token %}
-                            <button class="btn btn-sm bg-dark text-white" type="submit">
-                                Add to Cart
+                        {% if listing.seller != request.user %}
+                            <form method="post" action="{% url 'cart.add' id=listing.id %}" class="mt-2">
+                                {% csrf_token %}
+                                <button class="btn btn-sm bg-dark text-white" type="submit">
+                                    Add to Cart
+                                </button>
+                            </form>
+                        {% else %}
+                            <button class="btn btn-sm mt-2" style="background-color: #5a6268; color: white; border: none;" disabled>
+                                Your Listing
                             </button>
-                        </form>
+                        {% endif %}
 
                     </div>
 
