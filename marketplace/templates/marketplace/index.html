@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
+{% block content %}
+
 <div class="p-3">
     <div class="container">
         <div class="row mt-3">
@@ -9,40 +10,45 @@
                 <hr />
             </div>
         </div>
-    <div class="row">
-        {% for listing in template_data.listings %}
-        <div class="col-md-4 col-lg-3 mb-2">
-            <div class="p-2 card align-items-center pt-4">
-            <img src="{% static 'img/about.jpg' %}"
-            class="card-img-top rounded">
-                <div class="card-body text-center">
-                    <a href="{% url 'marketListings.show' id=listing.id %}"
-                    class="btn bg-dark text-white">
-                {{ listing.item.pokemon.name }}
+
+        <div class="row">
+            {% for listing in template_data.listings %}
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+
+                <div class="card text-center p-2 h-100">
+
+                    <a href="{% url 'marketListings.show' id=listing.id %}">
+                        <div style="background-color: #f0f0f0; padding: 10px; display: inline-block; border-radius: 8px;">
+                            <img src="{{ listing.item.pokemon.image_url }}"
+                                 style="width: 120px; height: auto; display: block; margin: auto;"
+                                 alt="{{ listing.item.pokemon.name }}">
+                        </div>
                     </a>
-                </div>
-                {{listing.price}}
-                <p class="card-text">
- <form method="post" action="{% url 'cart.add' id=listing.id %}">
-<div class="row">
-{% csrf_token %}
-<div class="col-auto">
-<div class="input-group col-auto">
 
-</div>
-</div>
-<div class="col-auto">
-<button class="btn bg-dark text-white"
-type="submit">Add to cart</button>
-</div>
-</div>
-</form>
-</p>
+                    <div class="card-body p-1">
+
+                        <!-- Name (just text now, not link) -->
+                        <h5 class="mb-2">{{ listing.item.pokemon.name }}</h5>
+
+                        <!-- Price -->
+                        <p class="mb-1">{{ listing.price }}</p>
+
+                        <!-- Add to Cart button -->
+                        <form method="post" action="{% url 'cart.add' id=listing.id %}" class="mt-2">
+                            {% csrf_token %}
+                            <button class="btn btn-sm bg-dark text-white" type="submit">
+                                Add to Cart
+                            </button>
+                        </form>
+
+                    </div>
 
                 </div>
+
             </div>
             {% endfor %}
         </div>
     </div>
 </div>
+
 {% endblock content %}
