@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'cart',
     'pokemonCard',
     'collection',
-    'accounts'
+    'accounts',
 ]
 
 MIDDLEWARE = [

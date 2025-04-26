@@ -20,4 +20,5 @@ class CartItem(models.Model):
 
     def __str__(self):
         return str(self.id) + ' - ' + self.marketListing.item.pokemon.name
-# Create your models here.
+
+
