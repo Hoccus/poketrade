@@ -14,13 +14,10 @@
           <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
 
             <a href="{% url 'collection.detail' id=item.id %}" style="text-decoration: none; color: inherit;">
-              <div class="card text-center p-2">
+              <div class="card text-center p-2 {% if item.status == 'listed' %}border-danger{% endif %}">
                 <img src="{{ item.pokemon.image_url }}" class="card-img-top" style="width: 80px; margin: auto;" alt="{{ item.pokemon.name }}">
                 <div class="card-body p-1">
                   <h5>{{ item.pokemon.name }}</h5>
-                    {% if item.status == 'listed' %}
-                    <p>listed on market</p>
-                    {%endif%}
                 </div>
               </div>
             </a>
