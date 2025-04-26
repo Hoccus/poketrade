@@ -18,10 +18,11 @@
                 <div class="card text-center p-2 h-100">
 
                     <a href="{% url 'marketListings.show' id=listing.id %}">
-                        <img src="{{ listing.item.pokemon.image_url }}"
-                             class="card-img-top"
-                             style="width: 120px; margin: auto;"
-                             alt="{{ listing.item.pokemon.name }}">
+                        <div style="background-color: #f0f0f0; padding: 10px; display: inline-block; border-radius: 8px;">
+                            <img src="{{ listing.item.pokemon.image_url }}"
+                                 style="width: 120px; height: auto; display: block; margin: auto;"
+                                 alt="{{ listing.item.pokemon.name }}">
+                        </div>
                     </a>
 
                     <div class="card-body p-1">
