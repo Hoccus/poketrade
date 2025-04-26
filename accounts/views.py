@@ -59,3 +59,9 @@ def add_pokecoin(request):
         return redirect('add-pokecoin')
 
     return render(request, 'accounts/add_pokecoin.html')
+
+@login_required
+def get_random_pokemon(request):
+    if request.method == 'POST':
+        give_random_pokemons_to_user(request.user, count=1)
+    return redirect('collection.get_cards')

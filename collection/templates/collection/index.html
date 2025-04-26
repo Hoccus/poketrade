@@ -18,6 +18,9 @@
                 <img src="{{ item.pokemon.image_url }}" class="card-img-top" style="width: 80px; margin: auto;" alt="{{ item.pokemon.name }}">
                 <div class="card-body p-1">
                   <h5>{{ item.pokemon.name }}</h5>
+                    {% if item.status == 'listed' %}
+                    <p>listed on market</p>
+                    {%endif%}
                 </div>
               </div>
             </a>
