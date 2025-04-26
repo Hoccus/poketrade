@@ -1,36 +1,75 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
-<div class="p-3">
+{% block content %}
+
+<div class="p-4">
   <div class="container">
-    <div class="row mt-3">
-      <div class="col-md-6 mx-auto mb-3">
-        <h2>{{ template_data.title }}</h2>
+    <div class="row mt-4">
+
+      <div class="col-md-6 mb-4 text-center">
+        <div style="padding: 10px; display: inline-block; border-radius: 8px;">
+          <img src="{{ template_data.listing.item.pokemon.image_url }}"
+               style="width: 300px; height: auto; display: block; margin: auto;"
+               alt="{{ template_data.listing.item.pokemon.name }}">
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-4">
+        <h2>{{ template_data.listing.item.pokemon.name }}</h2>
         <hr />
+
+        <p><b>Type:</b> {{ template_data.listing.item.pokemon.type }}</p>
+        <p><b>HP:</b> {{ template_data.listing.item.pokemon.hp }}</p>
+
+            <div style="background-color: #ddd; height: 10px; width: 100%; border-radius: 5px; margin-bottom: 20px;">
+              {% if template_data.hp_percent <= 33 %}
+                <div style="background-color: #dc3545; height: 10px; width: {{ template_data.hp_percent }}%; border-radius: 5px;"></div>
+              {% elif template_data.hp_percent <= 66 %}
+                <div style="background-color: #ffc107; height: 10px; width: {{ template_data.hp_percent }}%; border-radius: 5px;"></div>
+              {% else %}
+                <div style="background-color: #28a745; height: 10px; width: {{ template_data.hp_percent }}%; border-radius: 5px;"></div>
+              {% endif %}
+            </div>
+
+        <p><b>Attack:</b> {{ template_data.listing.item.pokemon.attack }}</p>
+            <div style="background-color: #ddd; height: 10px; width: 100%; border-radius: 5px; margin-bottom: 20px;">
+              {% if template_data.attack_percent <= 33 %}
+                <div style="background-color: #dc3545; height: 10px; width: {{ template_data.attack_percent }}%; border-radius: 5px;"></div>
+              {% elif template_data.attack_percent <= 66 %}
+                <div style="background-color: #ffc107; height: 10px; width: {{ template_data.attack_percent }}%; border-radius: 5px;"></div>
+              {% else %}
+                <div style="background-color: #28a745; height: 10px; width: {{ template_data.attack_percent }}%; border-radius: 5px;"></div>
+              {% endif %}
+            </div>
+
+        <p><b>Defense:</b> {{ template_data.listing.item.pokemon.defense }}</p>
+          <div style="background-color: #ddd; height: 10px; width: 100%; border-radius: 5px; margin-bottom: 20px;">
+              {% if template_data.defense_percent <= 33 %}
+                <div style="background-color: #dc3545; height: 10px; width: {{ template_data.defense_percent }}%; border-radius: 5px;"></div>
+              {% elif template_data.defense_percent <= 66 %}
+                <div style="background-color: #ffc107; height: 10px; width: {{ template_data.defense_percent }}%; border-radius: 5px;"></div>
+              {% else %}
+                <div style="background-color: #28a745; height: 10px; width: {{ template_data.defense_percent }}%; border-radius: 5px;"></div>
+              {% endif %}
+            </div>
+        <p><b>Description:</b> {{ template_data.listing.item.pokemon.description }}</p>
+
+        <hr />
+        <p><b>Posted By:</b> {{ template_data.listing.seller.username }}</p>
         <p><b>Date Posted:</b> {{ template_data.listing.date }}</p>
         <p><b>Price:</b> ${{ template_data.listing.price }}</p>
-          <p class="card-text">
-<form method="post" action="{% url 'cart.add' id=template_data.listing.id %}">
-<div class="row">
-{% csrf_token %}
-<div class="col-auto">
-<div class="input-group col-auto">
 
-</div>
-</div>
-<div class="col-auto">
-<button class="btn bg-dark text-white"
-type="submit">Add to cart</button>
-</div>
-</div>
-</form>
-</p>
+        <form method="post" action="{% url 'cart.add' id=template_data.listing.id %}" class="mt-3">
+          {% csrf_token %}
+          <button class="btn bg-dark text-white" type="submit">
+            Add to Cart
+          </button>
+        </form>
 
       </div>
-      <div class="col-md-6 mx-auto mb-3 text-center">
-        <img src="{{ template_data.listing.image.url }}" class="rounded img-card-400" />
-      </div>
+
     </div>
   </div>
 </div>
+
 {% endblock content %}

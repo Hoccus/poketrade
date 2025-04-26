@@ -14,25 +14,27 @@
         <div class="row">
             {% for listing in template_data.listings %}
             <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-                <div class="card text-center p-2">
-                    <img src="{{ listing.item.pokemon.image_url }}"
-                         class="card-img-top"
-                         style="width: 80px; margin: auto;"
-                         alt="{{ listing.item.pokemon.name }}">
+
+                <div class="card text-center p-2 h-100">
+
+                    <a href="{% url 'marketListings.show' id=listing.id %}">
+                        <div style="background-color: #f0f0f0; padding: 10px; display: inline-block; border-radius: 8px;">
+                            <img src="{{ listing.item.pokemon.image_url }}"
+                                 style="width: 120px; height: auto; display: block; margin: auto;"
+                                 alt="{{ listing.item.pokemon.name }}">
+                        </div>
+                    </a>
 
                     <div class="card-body p-1">
 
-                        <!-- Pokémon name button -->
-                        <a href="{% url 'marketListings.show' id=listing.id %}"
-                           class="btn btn-sm bg-dark text-white mb-2">
-                            {{ listing.item.pokemon.name }}
-                        </a>
+                        <!-- Name (just text now, not link) -->
+                        <h5 class="mb-2">{{ listing.item.pokemon.name }}</h5>
 
                         <!-- Price -->
                         <p class="mb-1">{{ listing.price }}</p>
 
-                        <!-- Add to Cart form -->
-                        <form method="post" action="{% url 'cart.add' id=listing.id %}">
+                        <!-- Add to Cart button -->
+                        <form method="post" action="{% url 'cart.add' id=listing.id %}" class="mt-2">
                             {% csrf_token %}
                             <button class="btn btn-sm bg-dark text-white" type="submit">
                                 Add to Cart
@@ -40,7 +42,9 @@
                         </form>
 
                     </div>
+
                 </div>
+
             </div>
             {% endfor %}
         </div>
