@@ -49,3 +49,13 @@ def orders(request):
     template_data['title'] = 'Orders'
     template_data['orders'] = request.user.orders.all()
     return render(request, 'accounts/orders.html', {'template_data': template_data})
+
+@login_required
+def add_pokecoin(request):
+    if request.method == 'POST':
+        profile = request.user.userprofile
+        profile.pokeCoins += 1
+        profile.save()
+        return redirect('add-pokecoin')
+
+    return render(request, 'accounts/add_pokecoin.html')

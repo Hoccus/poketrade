@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="p-3">
     <div class="container">
@@ -15,7 +15,9 @@
                     </div>
                     <div class="card-body">
                         <b>Date:</b> {{ order.date }}<br />
-                        <b>Total:</b> ${{ order.total }}<br />
+                        <b>Total:</b> {{ order.total }}
+                        <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20">
+                        <br />
 
                         <table class="table table-bordered table-striped text-center mt-3">
                             <thead>

@@ -28,7 +28,7 @@
                     <tr>
                         <td>{{ listing.id }}</td>
                         <td>{{ listing.item.pokemon.name }}</td>
-                        <td>${{ listing.price }}</td>
+                        <td>{{ listing.price }} PokeCoins</td>
                         <td>{{ listing.quantity }}</td>
                     </tr>
                     {% endfor %}
@@ -38,7 +38,7 @@
 
         <div class="row">
             <div class="text-end">
-                <a class="btn btn-outline-secondary mb-2"><b>Total to pay:</b> ${{ template_data.cart_total }}</a>
+                <a class="btn btn-outline-secondary mb-2"><b>Total to pay:</b> {{ template_data.cart_total }} PokeCoins</a>
 
                 {% if template_data.listings_in_cart|length > 0 %}
                     <a href="{% url 'cart.purchase' %}" class="btn bg-dark text-white mb-2">Purchase</a>
