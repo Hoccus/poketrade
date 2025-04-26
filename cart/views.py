@@ -33,6 +33,10 @@ def purchase(request):
         item.order = order
         item.save()
 
+        listing.seller.userprofile.pokeCoins += item.price
+        listing.seller.userprofile.save()
+        listing.item.delete()
+
         CollectionItem.objects.create(
             user=request.user,
             pokemon=listing.item.pokemon,
