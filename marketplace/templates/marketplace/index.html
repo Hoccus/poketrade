@@ -1,48 +1,85 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
+{% block content %}
+
 <div class="p-3">
     <div class="container">
-        <div class="row mt-3">
-            <div class="col mx-auto mb-3">
-                <h2>Marketplace Listings</h2>
-                <hr />
+
+       <div class="row align-items-center">
+            <div class="col text-start">
+                <h2 class="mb-0">Marketplace Listings</h2> <!-- No bottom margin -->
+            </div>
+            <div class="col text-end">
+                <h5 class="mb-0">
+                    Your PokeCoins:
+                    {{ request.user.userprofile.pokeCoins }}
+                    <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20" style="vertical-align: middle;">
+                </h5>
             </div>
         </div>
-    <div class="row">
-        {% for listing in template_data.listings %}
-        <div class="col-md-4 col-lg-3 mb-2">
-            <div class="p-2 card align-items-center pt-4">
-            <img src="{% static 'img/about.jpg' %}"
-            class="card-img-top rounded">
-                <div class="card-body text-center">
-                    <a href="{% url 'marketListings.show' id=listing.id %}"
-                    class="btn bg-dark text-white">
-                {{ listing.item.pokemon.name }}
-                    </a>
-                </div>
-                {{listing.price}}
-                <p class="card-text">
- <form method="post" action="{% url 'cart.add' id=listing.id %}">
+
+        <hr class="my-2" />
+<form method="GET">
 <div class="row">
-{% csrf_token %}
 <div class="col-auto">
 <div class="input-group col-auto">
-
+<div class="input-group-text">
+Search</div>
+<input type="text" class="form-control"
+name="search">
 </div>
 </div>
 <div class="col-auto">
 <button class="btn bg-dark text-white"
-type="submit">Add to cart</button>
+type="submit">Search</button>
 </div>
 </div>
 </form>
 </p>
+        <div class="row">
+            {% for listing in template_data.listings %}
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+
+                <div class="card text-center p-2 h-100 {% if listing.seller == request.user %}border-danger{% endif %}">
+
+                    <a href="{% url 'marketListings.show' id=listing.id %}">
+                        <div style="background-color: #f0f0f0; padding: 10px; display: inline-block; border-radius: 8px;">
+                            <img src="{{ listing.item.pokemon.image_url }}"
+                                 style="width: 120px; height: auto; display: block; margin: auto;"
+                                 alt="{{ listing.item.pokemon.name }}">
+                        </div>
+                    </a>
+
+                    <div class="card-body p-1">
+
+                        <!-- Name (just text now, not link) -->
+                        <h5 class="mb-2">{{ listing.item.pokemon.name }}</h5>
+
+                        <!-- Price -->
+                        <p class="mb-1">{{ listing.price }} <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20"></p>
+
+                        <!-- Add to Cart button -->
+                        {% if listing.seller != request.user %}
+                            <form method="post" action="{% url 'cart.add' id=listing.id %}" class="mt-2">
+                                {% csrf_token %}
+                                <button class="btn btn-sm bg-dark text-white" type="submit">
+                                    Add to Cart
+                                </button>
+                            </form>
+                        {% else %}
+                            <button class="btn btn-sm mt-2" style="background-color: #5a6268; color: white; border: none;" disabled>
+                                Your Listing
+                            </button>
+                        {% endif %}
+
+                    </div>
 
                 </div>
+
             </div>
             {% endfor %}
         </div>
     </div>
 </div>
+
 {% endblock content %}

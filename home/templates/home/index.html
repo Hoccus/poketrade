@@ -1,31 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-    <style>
-    ,bg-index{
-
-    }
-    </style>
-
-    <div class="jumbotron bg-index text-white text-center ">
-        <h1>PokéTrade</h1>
-        <h4>Welcome to the Pokemon TCG</h4>
-        <div class="row">
-            <div class="col text-center">
-                <a href="{% url 'accounts.signup' %}" class="btn btn-primary btn-lg">Play For Free</a>
-            </div>
-        </div>
-    </div>
-
-<div class="p-3">
-  <div class="container">
-    <div class="row mt-3">
-      <div class="col mx-auto text-center mb-3">
-          <h2></h2>>
-      </div>
-    </div>
+<header class="masthead bg-index text-black text-center py-4">
+  <div class="container d-flex align-items-center flex-column pt-2">
+    <h2>PokéTrade</h2>
+    <p>Start Building your collection</p>
   </div>
-</div>
-
-    <div class="p-4"
+</header>
 
 {% endblock content %}
