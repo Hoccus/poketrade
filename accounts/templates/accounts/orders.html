@@ -37,8 +37,6 @@
                 <tr>
                     <th scope="col">Order ID</th>
                     <th scope="col">Pokemon Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
                     <th scope="col">Total Price</th>
                     <th scope="col">Date</th>
                 </tr>
@@ -47,11 +45,9 @@
                 {% for order in template_data.orders %}
                 <tr>
                     <td>{{ order.id }}</td>
-                    <td>{{ order.item.listing.item.pokemon.name }}</td>
-                    <td>{{ order.item.listing.price }} <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20"></td>
-                    <td>{{ order.item.quantity }}</td>
-                    <td>{{ order.total_price }} <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20"></td>
-                    <td>{{ order.date_ordered }}</td>
+                    <td>{{ listing.item.pokemon }}</td>
+                    <td>{{ order.total }} <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20"></td>
+                    <td>{{ order.date }} </td>
                 </tr>
                 {% endfor %}
             </tbody>
