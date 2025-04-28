@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <!-- Sub-menu -->
+    <div class="row mb-4">
+        <div class="col">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+                <div class="container-fluid">
+                    <h2 class="pokemon-title me-4 mb-0">Trading Center</h2>
+                    <div class="navbar-nav">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'trade.list' %}active{% endif %}"
+                           href="{% url 'trade.list' %}">
+                           <i class="fas fa-exchange-alt"></i> My Trades
+                        </a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'trade.users_list' %}active{% endif %}"
+                           href="{% url 'trade.users_list' %}">
+                           <i class="fas fa-users"></i> Find Traders
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    
+    <!-- Search Form -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="GET" action="{% url 'trade.users_list' %}" class="d-flex">
+                <input type="text" name="search" class="form-control me-2" 
+                       placeholder="Search trainers..." value="{{ search_query }}">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Users List -->
+    <div class="row">
+        {% for user in users %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user.username }}</h5>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                Joined: {{ user.date_joined|date:"M d, Y" }}
+                            </small>
+                        </p>
+                        <div class="d-grid">
+                            <a href="{% url 'trade.initiate' user.id %}" 
+                               class="btn btn-outline-primary">
+                                Propose Trade
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col">
+                <p>No trainers found.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

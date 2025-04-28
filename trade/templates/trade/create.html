@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+                <div class="container-fluid">
+                    <h2 class="pokemon-title me-4 mb-0">Create Trade with {{ recipient.username }}</h2>
+                    <div class="navbar-nav">
+                        <a class="nav-link" href="{% url 'trade.list' %}">
+                            <i class="fas fa-arrow-left"></i> Back to Trades
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <form method="POST" action="{% url 'trade.create' %}">
+        {% csrf_token %}
+        <input type="hidden" name="recipient_id" value="{{ recipient.id }}">
+        
+        <div class="row">
+            <!-- Your Pokemon -->
+            <div class="col-md-6">
+                <h4 class="mb-3">Your Pokémon</h4>
+                <div class="row">
+                    {% for item in user_items %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <img src="{{ item.pokemon.image_url }}" class="card-img-top" alt="{{ item.pokemon.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.pokemon.name }}</h5>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="offered_items" value="{{ item.id }}" id="offered_{{ item.id }}">
+                                    <label class="form-check-label" for="offered_{{ item.id }}">
+                                        Select for trade
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Their Pokemon -->
+            <div class="col-md-6">
+                <h4 class="mb-3">{{ recipient.username }}'s Pokémon</h4>
+                <div class="row">
+                    {% for item in recipient_items %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <img src="{{ item.pokemon.image_url }}" class="card-img-top" alt="{{ item.pokemon.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.pokemon.name }}</h5>
+                                <p class="card-text">
+                                    Type: {{ item.pokemon.type }}<br>
+                                    Rarity: {{ item.pokemon.rarity }}
+                                </p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="requested_items" value="{{ item.id }}" id="requested_{{ item.id }}">
+                                    <label class="form-check-label" for="requested_{{ item.id }}">
+                                        Request
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4 mb-4">
+            <div class="col text-center">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-handshake"></i> Propose Trade
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

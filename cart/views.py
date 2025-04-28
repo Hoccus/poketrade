@@ -18,30 +18,12 @@ def purchase(request):
     cart_total = calculate_cart_total(cart, listings_in_cart)
 
     if request.user.userprofile.pokeCoins < cart_total:
-        messages.error(request, "You don't have enough PokeCoins to complete this purchase.")
-        return redirect('cart.index')
+        return redirect('/cart/?error=not_enough_coins')
 
-    order = Order()
-    order.user = request.user
-    order.total = cart_total
-    order.save()
+    order = create_order(request.user, cart_total)
 
     for listing in listings_in_cart:
-        item = CartItem()
-        item.marketListing = listing
-        item.price = listing.price
-        item.order = order
-        item.save()
-
-        listing.seller.userprofile.pokeCoins += item.price
-        listing.seller.userprofile.save()
-        listing.item.delete()
-
-        CollectionItem.objects.create(
-            user=request.user,
-            pokemon=listing.item.pokemon,
-            status='collection'
-        )
+        process_listing_purchase(listing, request.user, order)
 
     request.user.userprofile.pokeCoins -= cart_total
     request.user.userprofile.save()
@@ -53,7 +35,7 @@ def purchase(request):
         'order_id': order.id
     }
 
-    return render(request, 'cart/purchase.html',{'template_data': template_data})
+    return render(request, 'cart/purchase.html', {'template_data': template_data})
 
 def index(request):
     cart_total = 0
@@ -88,4 +70,26 @@ def clear(request):
     request.session['cart'] = {}
     return redirect('cart.index')
 
-# Create your views here.
+def create_order(user, total):
+    order = Order(user=user, total=total)
+    order.save()
+    return order
+
+def process_listing_purchase(listing, buyer, order):
+    CartItem.objects.create(
+        marketListing=listing,
+        price=listing.price,
+        order=order
+    )
+
+    seller_profile = listing.seller.userprofile
+    seller_profile.pokeCoins += listing.price
+    seller_profile.save()
+
+    CollectionItem.objects.create(
+        user=buyer,
+        pokemon=listing.item.pokemon,
+        status='collection'
+    )
+
+    listing.item.delete()

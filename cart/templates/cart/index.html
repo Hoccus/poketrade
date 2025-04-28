@@ -4,17 +4,44 @@
 {% load static %}
 {% load cart_filters %}
 
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const error = urlParams.get('error');
+
+  if (error === 'not_enough_coins') {
+    alert("You don't have enough PokeCoins to complete this purchase.");
+  }
+</script>
+
 <div class="p-3">
     <div class="container">
-        <div class="row mt-3">
-            <div class="col mx-auto mb-3">
-                <h2>Shopping Cart</h2>
-                <hr />
-                <h5>Your PokeCoins: {{ request.user.userprofile.pokeCoins }}
-                    <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20">
-                </h5>
-            </div>
+        <div class="row mb-4">
+        <div class="col">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+                <div class="container-fluid">
+                    <h2 class="pokemon-title me-4 mb-0">Cart</h2>
+                    <div class="navbar-nav">
+                        <span class="nav-link d-flex align-items-center">
+                            Your PokéCoins: {{ request.user.userprofile.pokeCoins }}
+                            <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20" class="ms-1">
+                        </span>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'marketplace.index' %}active{% endif %}"
+                           href="{% url 'marketplace.index' %}">
+                           <i class="fas fa-store"></i> Browse Cards
+                        </a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'cart.index' %}active{% endif %}"
+                           href="{% url 'cart.index' %}">
+                           <i class="fas fa-shopping-cart"></i> Cart
+                        </a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'accounts.orders' %}active{% endif %}"
+                           href="{% url 'accounts.orders' %}">
+                           <i class="fas fa-box"></i> Orders
+                        </a>
+                    </div>
+                </div>
+            </nav>
         </div>
+    </div>
 
         <div class="row m-1">
             <table class="table table-bordered table-striped text-center">

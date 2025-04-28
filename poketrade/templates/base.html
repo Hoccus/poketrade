@@ -25,11 +25,37 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+            background-image: url("{% static 'img/bg.jpg' %}");
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content-wrapper {
+            background-color: rgba(255, 255, 255, 0.80);
+            width: 95%;
+            max-width: 1400px;
+            margin: 0 auto;
+            flex: 1 0 auto;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+        }
+
+        .main-content-wrapper .container {
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
         }
 
         .navbar {
-            background-color: #ffffff;
-            font-size: 18px;
+            background-color: #dc6363;
+            font-size: 19px;
+            font-weight: bold;
             padding: 0 10px;
             border-bottom: 2px solid rgba(0, 0, 0, 0.3);
         }
@@ -50,6 +76,8 @@
             color: white;
             padding: 20px;
             text-align: center;
+            width: 100%;
+            flex-shrink: 0;
         }
 
         .footer-nav a {
@@ -61,62 +89,72 @@
         .footer-nav a:hover {
             text-decoration: underline;
         }
+
     </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
 
     <!-- Navbar -->
-    <header class="navbar navbar-expand-lg navbar-light">
+    <header class="navbar navbar-expand-lg navbar-dark rounded">
         <div class="container">
+            {% if user.is_authenticated %}
+            <a class="navbar-brand" href="{% url 'collection.get_cards' %}">
+                <img src="{% static 'img/logo.png' %}" alt="Logo" height="65">
+            </a>
+            {% else %}
             <a class="navbar-brand" href="{% url 'home.index' %}">
                 <img src="{% static 'img/logo.png' %}" alt="Logo" height="65">
             </a>
+            {% endif %}
 
 
             <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
                 <div class="navbar-nav ms-auto text-end">
-                    <a class="nav-link" href="{% url 'home.about' %}">About</a>
 
                     {% if user.is_authenticated %}
-                        <a class="nav-link" href="{% url 'add-pokecoin' %}">Earn PokeCoins</a>
-                        <a class="nav-link" href="{% url 'collection.get_cards' %}">Collection</a>
-                        <a class="nav-link" href="{% url 'marketplace.index' %}">Marketplace</a>
-                        <a class="nav-link" href="{% url 'cart.index' %}">Cart</a>
-                        <a class="nav-link" href="{% url 'accounts.orders' %}">Orders</a>
-                        <a class="nav-link" href="{% url 'accounts.logout' %}">Logout ({{ user.username }})</a>
+                        <a class="nav-link text-white" href="{% url 'add-pokecoin' %}">Earn PokeCoins</a>
+                        <a class="nav-link text-white" href="{% url 'collection.get_cards' %}">Collection</a>
+                        <a class="nav-link text-white" href="{% url 'trade.list' %}">Trade</a>
+                        <a class="nav-link text-white" href="{% url 'marketplace.index' %}">Marketplace</a>
+                        <a class="nav-link text-white" href="{% url 'accounts.logout' %}">Logout ({{ user.username }})</a>
                     {% else %}
-                        <a class="nav-link" href="{% url 'accounts.login' %}">Login</a>
-                        <a class="nav-link" href="{% url 'accounts.signup' %}">Sign Up</a>
+                        <a class="nav-link text-white" href="{% url 'home.about' %}">About</a>
+                        <a class="nav-link text-white" href="{% url 'accounts.login' %}">Login</a>
+                        <a class="nav-link text-white" href="{% url 'accounts.signup' %}">Sign Up</a>
                     {% endif %}
                 </div>
             </div>
-
         </div>
     </header>
     <!-- Navbar -->
 
     <!-- Main Content -->
-    <main class="flex-grow-1">
-        <div class="container my-4">
-            {% block content %}
-            {% endblock content %}
-        </div>
-    </main>
+    <div class="main-content-wrapper">
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+
     <!-- Main Content -->
 
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3">
         <div class="footer-nav mb-2">
-            <a href="#">Privacy Policy</a> |
-            <a href="#">Terms of Service</a> |
-            <a href="#">About</a> |
-            <a href="#">Contact</a> |
-            <a href="#">Help Center</a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+               target="_blank" rel="noopener noreferrer">Privacy Policy</a> |
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+               target="_blank" rel="noopener noreferrer">Terms of Service</a> |
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+               target="_blank" rel="noopener noreferrer">About</a> |
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+               target="_blank" rel="noopener noreferrer">Contact</a> |
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+               target="_blank" rel="noopener noreferrer">Help Center</a>
         </div>
 
         <div class="copyright">
-            &copy; 2025 Group 2. All Rights Reserved.
+            &copy; 2025 Group 2. All Rights Reserved. All trademarks and copyrights are the property of their respective owners.
         </div>
     </footer>
     <!-- Footer -->
