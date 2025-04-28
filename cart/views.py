@@ -18,8 +18,7 @@ def purchase(request):
     cart_total = calculate_cart_total(cart, listings_in_cart)
 
     if request.user.userprofile.pokeCoins < cart_total:
-        messages.error(request, "You don't have enough PokeCoins to complete this purchase.")
-        return redirect('cart.index')
+        return redirect('/cart/?error=not_enough_coins')
 
     order = Order()
     order.user = request.user

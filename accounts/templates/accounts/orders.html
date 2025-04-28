@@ -1,49 +1,61 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="p-3">
-    <div class="container">
-        <div class="row mt-3">
-            <div class="col mx-auto mb-3">
-                <h2>My Orders</h2>
-                <hr />
-
-                {% for order in template_data.orders %}
-                <div class="card mb-4">
-                    <div class="card-header">
-                        Order #{{ order.id }}
-                    </div>
-                    <div class="card-body">
-                        <b>Date:</b> {{ order.date }}<br />
-                        <b>Total:</b> {{ order.total }}
-                        <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20">
-                        <br />
-
-                        <table class="table table-bordered table-striped text-center mt-3">
-                            <thead>
-                                <tr>
-{#                                    <th scope="col">Item ID</th>#}
-{#                                    <th scope="col">pokemon</th>#}
-{#                                    <th scope="col">Price</th>#}
-{#                                    <th scope="col">Quantity</th>#}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for item in order.item_set.all %}
-                                <tr>
-                                    <td>{{ item.id }}</td>
-                                    <td>${{ item.price }}</td>
-                                <td>woowee</td>
-                                <td>wwww</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+                <div class="container-fluid">
+                    <h2 class="pokemon-title me-4 mb-0">Orders</h2>
+                    <div class="navbar-nav">
+                        <span class="nav-link d-flex align-items-center">
+                            Your PokéCoins: {{ request.user.userprofile.pokeCoins }}
+                            <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20" class="ms-1">
+                        </span>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'marketplace.index' %}active{% endif %}"
+                           href="{% url 'marketplace.index' %}">
+                           <i class="fas fa-store"></i> Browse Cards
+                        </a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'cart.index' %}active{% endif %}"
+                           href="{% url 'cart.index' %}">
+                           <i class="fas fa-shopping-cart"></i> Cart
+                        </a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'accounts.orders' %}active{% endif %}"
+                           href="{% url 'accounts.orders' %}">
+                           <i class="fas fa-box"></i> Orders
+                        </a>
                     </div>
                 </div>
-                {% endfor %}
-            </div>
+            </nav>
         </div>
     </div>
+
+    <!-- Order tables -->
+    <div class="row m-1">
+        <table class="table table-bordered table-striped text-center">
+            <thead>
+                <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Pokemon Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in template_data.orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.item.listing.item.pokemon.name }}</td>
+                    <td>{{ order.item.listing.price }} <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20"></td>
+                    <td>{{ order.item.quantity }}</td>
+                    <td>{{ order.total_price }} <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20"></td>
+                    <td>{{ order.date_ordered }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
-{% endblock content %}
+{% endblock %}

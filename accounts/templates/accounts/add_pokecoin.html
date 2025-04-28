@@ -2,6 +2,15 @@
 {% load static %}
 {% block content %}
 
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const error = urlParams.get('error');
+
+  if (error === 'not_enough_coins') {
+    alert("You don't have enough PokeCoins to complete this purchase.");
+  }
+</script>
+
 <style>
 .custom-thick-border {
     border-width: 1.5px;
@@ -34,7 +43,7 @@
                         <form method="post" action="{% url 'get-random-pokemon' %}" class="d-inline-block mt-2">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-success btn-sm">
-                                Get a Random Pokémon
+                                Buy Random Pokemon: 75 <img src="{% static 'img/pokecoin.png' %}" alt="PokeCoin" height="20">
                             </button>
                         </form>
 

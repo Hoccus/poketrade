@@ -63,5 +63,9 @@ def add_pokecoin(request):
 @login_required
 def get_random_pokemon(request):
     if request.method == 'POST':
+        if request.user.userprofile.pokeCoins < 75:
+            return redirect('/accounts/add-pokecoin/?error=not_enough_coins')
+        request.user.userprofile.pokeCoins -= 75
+        request.user.userprofile.save()
         give_random_pokemons_to_user(request.user, count=1)
     return redirect('collection.get_cards')
