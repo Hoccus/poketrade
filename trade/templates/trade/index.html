@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    
+
     <!-- Incoming Trade Requests -->
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">
@@ -66,43 +66,68 @@
 
     <!-- Outgoing Trade Requests -->
     <div class="card">
-        <div class="card-header bg-secondary text-white">
-            <h3 class="mb-0">Your Trade Offers</h3>
+        <div class="card-header bg-secondary text-white" role="button" data-bs-toggle="collapse" 
+             data-bs-target="#outgoingTrades" aria-expanded="true" aria-controls="outgoingTrades"
+             style="cursor: pointer;">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">Your Trade Offers</h3>
+                <i class="fas fa-chevron-down"></i>
+            </div>
         </div>
-        <div class="card-body">
-            {% if outgoing_trades %}
-                {% for trade in outgoing_trades %}
-                    <div class="trade-item border p-3 mb-3 rounded">
-                        <h4>Trade with {{ trade.recipient.username }}</h4>
-                        <p>Status: {{ trade.status }}</p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h5>You're offering:</h5>
-                                <ul class="list-unstyled">
-                                    {% for item in trade.tradeitem_set.all %}
-                                        {% if item.recipient != request.user %}
-                                            <li>{{ item.item.pokemon.name }}</li>
-                                        {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <div class="col-md-6">
-                                <h5>You're requesting:</h5>
-                                <ul class="list-unstyled">
-                                    {% for item in trade.tradeitem_set.all %}
-                                        {% if item.recipient == request.user %}
-                                            <li>{{ item.item.pokemon.name }}</li>
-                                        {% endif %}
-                                    {% endfor %}
-                                </ul>
+        <div id="outgoingTrades" class="collapse show">
+            <div class="card-body">
+                {% if outgoing_trades %}
+                    {% for trade in outgoing_trades %}
+                        <div class="trade-item border p-3 mb-3 rounded">
+                            <h4>Trade with {{ trade.recipient.username }}</h4>
+                            <p>Status: {{ trade.status }}</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5>You're offering:</h5>
+                                    <ul class="list-unstyled">
+                                        {% for item in trade.tradeitem_set.all %}
+                                            {% if item.recipient != request.user %}
+                                                <li>{{ item.item.pokemon.name }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>You're requesting:</h5>
+                                    <ul class="list-unstyled">
+                                        {% for item in trade.tradeitem_set.all %}
+                                            {% if item.recipient == request.user %}
+                                                <li>{{ item.item.pokemon.name }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>No outgoing trade offers.</p>
-            {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p>No outgoing trade offers.</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const collapseElement = document.getElementById('outgoingTrades');
+        const icon = collapseElement.previousElementSibling.querySelector('.fa-chevron-down');
+
+        collapseElement.addEventListener('show.bs.collapse', function () {
+            icon.style.transform = 'rotate(0deg)';
+            icon.style.transition = 'transform 0.3s ease';
+        });
+
+        collapseElement.addEventListener('hide.bs.collapse', function () {
+            icon.style.transform = 'rotate(-90deg)';
+            icon.style.transition = 'transform 0.3s ease';
+        });
+    });
+</script>
 {% endblock %}
