@@ -102,6 +102,18 @@
                                         {% endfor %}
                                     </ul>
                                 </div>
+                                <div class="d-flex mt-3">
+                                    <form method="POST" action="{% url 'trade.cancel_trade' id=trade.id %}" class="me-2">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">
+                                            Cancel Trade
+                                        </button>
+                                    </form>
+
+                                    <a href="{% url 'trade.edit_trade' trade.id %}" class="btn btn-primary">
+                                        Edit Trade
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}

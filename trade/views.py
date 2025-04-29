@@ -81,6 +81,74 @@ def create_trade(request):
     return redirect('trade.list')
 
 @login_required
+def cancel_trade(request, id):
+    trade = get_object_or_404(Trade, id=id)
+    trade.delete()
+    return redirect('trade.list')
+
+@login_required
+def edit_trade(request, id):
+    trade = get_object_or_404(Trade, id=id, initiator=request.user)
+
+    if trade.status != 'pending':
+        messages.error(request, "Only pending trades can be edited.")
+        return redirect('trade.list')
+
+    if request.method == 'POST':
+        trade.tradeitem_set.all().delete()
+
+        offered_items = request.POST.getlist('offered_items')
+        requested_items = request.POST.getlist('requested_items')
+
+        if not offered_items or not requested_items:
+            messages.error(request, "Please select at least one Pokémon from each side!")
+            return redirect('trade.edit_trade', id=trade.id)
+
+        for item_id in offered_items:
+            item = get_object_or_404(CollectionItem, id=item_id, user=request.user)
+            item.status = 'pending'
+            item.save()
+            TradeItem.objects.create(
+                trade=trade,
+                item=item,
+                recipient=trade.recipient
+            )
+
+        for item_id in requested_items:
+            item = get_object_or_404(CollectionItem, id=item_id, user=trade.recipient)
+            item.status = 'pending'
+            item.save()
+            TradeItem.objects.create(
+                trade=trade,
+                item=item,
+                recipient=request.user
+            )
+
+        messages.success(request, "Trade updated successfully!")
+        return redirect('trade.list')
+
+    from django.db.models import Q
+
+    user_items = CollectionItem.objects.filter(
+        Q(user=request.user) & (Q(status='collection') | Q(id__in=trade.tradeitem_set.values_list('item_id', flat=True)))
+    )
+
+    recipient_items = CollectionItem.objects.filter(
+        Q(user=trade.recipient) & (Q(status='collection') | Q(id__in=trade.tradeitem_set.values_list('item_id', flat=True)))
+    )
+
+    offered_item_ids = trade.tradeitem_set.filter(recipient=trade.recipient).values_list('item_id', flat=True)
+    requested_item_ids = trade.tradeitem_set.filter(recipient=request.user).values_list('item_id', flat=True)
+
+    return render(request, 'trade/edit.html', {
+        'trade': trade,
+        'user_items': user_items,
+        'recipient_items': recipient_items,
+        'offered_item_ids': offered_item_ids,
+        'requested_item_ids': requested_item_ids,
+    })
+
+@login_required
 def accept_trade(request, trade_id):
     trade = get_object_or_404(Trade, id=trade_id, recipient=request.user, status='pending')
     trade_items = TradeItem.objects.filter(trade=trade)

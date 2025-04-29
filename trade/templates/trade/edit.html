@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+
+    <!-- Sub-menu -->
+    <div class="row mb-4">
+        <div class="col">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+                <div class="container-fluid">
+                    <h2 class="pokemon-title me-4 mb-0">Trading Center</h2>
+                    <div class="navbar-nav">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'trade.users_list' %}active{% endif %}"
+                           href="{% url 'trade.users_list' %}">
+                           <i class="fas fa-users"></i> Find Traders
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Edit Trade Form -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            <h3 class="mb-0">Edit Trade with {{ trade.recipient.username }}</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="mb-3">Your Available Pokémon (Offering)</h5>
+                        <div class="card p-3">
+                            {% for item in user_items %}
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           name="offered_items"
+                                           value="{{ item.id }}"
+                                           id="offer-{{ item.id }}"
+                                           {% if item.id in offered_item_ids %}checked{% endif %}>
+                                    <label class="form-check-label" for="offer-{{ item.id }}">
+                                        <img src="{{ item.pokemon.image_url }}" alt="{{ item.pokemon.name }}" class="img-fluid" style="max-width: 50px; height: auto;">
+                                        {{ item.pokemon.name }}
+                                    </label>
+                                </div>
+                            {% empty %}
+                                <p>No available Pokémon to offer.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h5 class="mb-3">Pokémon You Want (Requesting)</h5>
+                        <div class="card p-3">
+                            {% for item in recipient_items %}
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           name="requested_items"
+                                           value="{{ item.id }}"
+                                           id="request-{{ item.id }}"
+                                           {% if item.id in requested_item_ids %}checked{% endif %}>
+                                    <label class="form-check-label" for="request-{{ item.id }}">
+                                        <img src="{{ item.pokemon.image_url }}" alt="{{ item.pokemon.name }}" class="img-fluid" style="max-width: 50px; height: auto;">
+                                        {{ item.pokemon.name }}
+                                    </label>
+                                </div>
+                            {% empty %}
+                                <p>This user has no available Pokémon to request.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success">Update Trade</button>
+                    <a href="{% url 'trade.list' %}" class="btn btn-secondary ms-2">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
