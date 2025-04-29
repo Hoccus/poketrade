@@ -7,6 +7,7 @@ class CollectionItem(models.Model):
         ('collection', 'In Collection'),
         ('listed', 'Listed on Marketplace'),
         ('pending', 'Pending Trade'),
+        ('favorited', 'Favorited'),
     ]
     id = models.AutoField(primary_key=True)
     date = models.DateTimeField(auto_now_add=True)

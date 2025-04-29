@@ -43,8 +43,8 @@ def user_collection(request):
 def toggle_favorite(request, id):
     item = get_object_or_404(CollectionItem, id=id, user=request.user)
     if item.status == 'collection':
-        item.status = 'pending'
-    elif item.status == 'pending':
+        item.status = 'favorited'
+    elif item.status == 'favorited':
         item.status = 'collection'
     item.save()
     return redirect('collection.detail', id=id)

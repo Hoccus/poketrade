@@ -31,22 +31,28 @@
                     <div class="trade-item border p-3 mb-3 rounded">
                         <h4>Trade from {{ trade.initiator.username }}</h4>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 d-flex flex-column">
                                 <h5>They're offering:</h5>
-                                <ul class="list-unstyled">
+                                <ul class="list-unstyled flex-grow-1">
                                     {% for item in trade.tradeitem_set.all %}
                                         {% if item.recipient == request.user %}
-                                            <li>{{ item.item.pokemon.name }}</li>
+                                            <li>
+                                                <img src="{{ item.item.pokemon.image_url }}" style="width: 40px; margin-right: 10px;" alt="{{ item.item.pokemon.name }}">
+                                                {{ item.item.pokemon.name }}
+                                            </li>
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 d-flex flex-column">
                                 <h5>They're requesting:</h5>
-                                <ul class="list-unstyled">
+                                <ul class="list-unstyled flex-grow-1">
                                     {% for item in trade.tradeitem_set.all %}
                                         {% if item.recipient != request.user %}
-                                            <li>{{ item.item.pokemon.name }}</li>
+                                            <li>
+                                                <img src="{{ item.item.pokemon.image_url }}" style="width: 40px; margin-right: 10px;" alt="{{ item.item.pokemon.name }}">
+                                                {{ item.item.pokemon.name }}
+                                            </li>
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
@@ -66,7 +72,7 @@
 
     <!-- Outgoing Trade Requests -->
     <div class="card">
-        <div class="card-header bg-secondary text-white" role="button" data-bs-toggle="collapse" 
+        <div class="card-header bg-secondary text-white" role="button" data-bs-toggle="collapse"
              data-bs-target="#outgoingTrades" aria-expanded="true" aria-controls="outgoingTrades"
              style="cursor: pointer;">
             <div class="d-flex justify-content-between align-items-center">
@@ -82,22 +88,28 @@
                             <h4>Trade with {{ trade.recipient.username }}</h4>
                             <p>Status: {{ trade.status }}</p>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 d-flex flex-column">  <!-- Ensures equal height in both columns -->
                                     <h5>You're offering:</h5>
-                                    <ul class="list-unstyled">
+                                    <ul class="list-unstyled flex-grow-1">  <!-- Ensures the list fills the available space -->
                                         {% for item in trade.tradeitem_set.all %}
                                             {% if item.recipient != request.user %}
-                                                <li>{{ item.item.pokemon.name }}</li>
+                                                <li>
+                                                    <img src="{{ item.item.pokemon.image_url }}" style="width: 40px; margin-right: 10px;" alt="{{ item.item.pokemon.name }}">
+                                                    {{ item.item.pokemon.name }}
+                                                </li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 d-flex flex-column">  <!-- Ensures equal height in both columns -->
                                     <h5>You're requesting:</h5>
-                                    <ul class="list-unstyled">
+                                    <ul class="list-unstyled flex-grow-1">
                                         {% for item in trade.tradeitem_set.all %}
                                             {% if item.recipient == request.user %}
-                                                <li>{{ item.item.pokemon.name }}</li>
+                                                <li>
+                                                    <img src="{{ item.item.pokemon.image_url }}" style="width: 40px; margin-right: 10px;" alt="{{ item.item.pokemon.name }}">
+                                                    {{ item.item.pokemon.name }}
+                                                </li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -124,22 +136,4 @@
         </div>
     </div>
 </div>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const collapseElement = document.getElementById('outgoingTrades');
-        const icon = collapseElement.previousElementSibling.querySelector('.fa-chevron-down');
-
-        collapseElement.addEventListener('show.bs.collapse', function () {
-            icon.style.transform = 'rotate(0deg)';
-            icon.style.transition = 'transform 0.3s ease';
-        });
-
-        collapseElement.addEventListener('hide.bs.collapse', function () {
-            icon.style.transform = 'rotate(-90deg)';
-            icon.style.transition = 'transform 0.3s ease';
-        });
-    });
-</script>
 {% endblock %}
