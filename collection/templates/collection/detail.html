@@ -8,18 +8,20 @@
 
       <!-- Favorite Button (Top Left) -->
       {% if item.status != 'listed' %}
-      <div class="position-absolute" style="top: 10px; left: 10px;">
-        <form method="post" action="{% url 'collection.toggle_favorite' id=item.id %}">
-          {% csrf_token %}
-          <button type="submit" style="background: none; border: none; font-size: 24px;">
-            {% if item.status == "favorited" %}
-              <span style="color: #ffc107;">&#9733;</span>  {# solid star #}
-            {% else %}
-              <span style="color: #ffc107;">&#9734;</span>  {# hollow star #}
-            {% endif %}
-          </button>
-        </form>
-      </div>
+        {% if item.status != 'pending' %}
+        <div class="position-absolute" style="top: 10px; left: 10px;">
+          <form method="post" action="{% url 'collection.toggle_favorite' id=item.id %}">
+            {% csrf_token %}
+            <button type="submit" style="background: none; border: none; font-size: 24px;">
+              {% if item.status == "favorited" %}
+                <span style="color: #ffc107;">&#9733;</span>  {# solid star #}
+              {% else %}
+                <span style="color: #ffc107;">&#9734;</span>  {# hollow star #}
+              {% endif %}
+            </button>
+          </form>
+        </div>
+        {% endif %}
       {% endif %}
 
       <!-- Left Side: Pokémon Image -->
