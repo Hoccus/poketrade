@@ -83,7 +83,16 @@ def create_trade(request):
 @login_required
 def cancel_trade(request, id):
     trade = get_object_or_404(Trade, id=id)
+
+    for trade_item in trade.tradeitem_set.all():
+        item = trade_item.item
+        if item.status == 'pending':
+            item.status = 'collection'
+            item.save()
+
     trade.delete()
+
+    messages.success(request, "Trade has been canceled and Pokémon returned to collection.")
     return redirect('trade.list')
 
 @login_required
