@@ -95,6 +95,9 @@ def edit_trade(request, id):
         return redirect('trade.list')
 
     if request.method == 'POST':
+        old_offered_items = list(trade.tradeitem_set.filter(recipient=trade.recipient))
+        old_requested_items = list(trade.tradeitem_set.filter(recipient=request.user))
+
         trade.tradeitem_set.all().delete()
 
         offered_items = request.POST.getlist('offered_items')
@@ -124,6 +127,16 @@ def edit_trade(request, id):
                 recipient=request.user
             )
 
+        for item in old_offered_items:
+            if str(item.item.id) not in offered_items:
+                item.item.status = 'collection'
+                item.item.save()
+
+        for item in old_requested_items:
+            if str(item.item.id) not in requested_items:
+                item.item.status = 'collection'
+                item.item.save()
+
         messages.success(request, "Trade updated successfully!")
         return redirect('trade.list')
 
@@ -147,6 +160,7 @@ def edit_trade(request, id):
         'offered_item_ids': offered_item_ids,
         'requested_item_ids': requested_item_ids,
     })
+
 
 @login_required
 def accept_trade(request, trade_id):
