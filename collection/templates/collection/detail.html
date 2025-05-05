@@ -107,54 +107,55 @@
 
         <!-- Date Acquired -->
         <p><b>Date Acquired:</b> {{ item.date }}</p>
-
-
-
+        {% if item.status != 'pending' %}
        <div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-12">
-      <div class="card shadow p-3 mb-4 rounded">
-        <div class="card-body">
-          <b class="text-start">List to Marketplace</b>
-          <br /><br />
-          {% if item.status == 'listed' %}
-          {% if marketListing %}
-            <form method="POST" action="{% url 'collection.delete_listing' id=item.id listing_id=marketListing.id %}">
-              {% csrf_token %}
-              <div class="text-center">
-                <button type="submit" class="btn btn-danger">
-                  Remove from Marketplace
-                </button>
-              </div>
-            </form>
-          {% endif %}
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <div class="card shadow p-3 mb-4 rounded">
+                <div class="card-body">
+                  <b class="text-start">List to Marketplace</b>
+                  <br /><br />
+                  {% if item.status == 'listed' %}
+                  {% if marketListing %}
+                    <form method="POST" action="{% url 'collection.delete_listing' id=item.id listing_id=marketListing.id %}">
+                      {% csrf_token %}
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-danger">
+                          Remove from Marketplace
+                        </button>
+                      </div>
+                    </form>
+                  {% endif %}
 
-          {% else %}
-          <form method="POST" action="{% url 'collection.create_listing' id=item.id %}">
-            {% csrf_token %}
-            <p>
-              <label for="price">Price:</label>
-              <input
-                type="number"
-                name="price"
-                id="price"
-                class="form-control"
-                required
-                min="0"
-                step="1">
-            </p>
-            <div class="text-center">
-              <button type="submit" class="btn bg-dark text-white">
-                List Pokemon
-              </button>
+                  {% else %}
+                  <form method="POST" action="{% url 'collection.create_listing' id=item.id %}">
+                    {% csrf_token %}
+                    <p>
+                      <label for="price">Price:</label>
+                      <input
+                        type="number"
+                        name="price"
+                        id="price"
+                        class="form-control"
+                        required
+                        min="0"
+                        step="1">
+                    </p>
+                    <div class="text-center">
+                      <button type="submit" class="btn bg-dark text-white">
+                        List Pokemon
+                      </button>
+                    </div>
+                  </form>
+                  {% endif %}
+
+
+                </div>
+              </div>
             </div>
-          </form>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+            </div>
+          </div>
+        {% endif %}
 
 
 
